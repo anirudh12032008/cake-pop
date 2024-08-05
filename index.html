@@ -1,127 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hakaccio Cake 3D Experience</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background-color: #fff3e0;
-      color: #4a2e2a;
-    }
-    #container {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      perspective: 1px;
-      scroll-behavior: smooth;
-    }
-    .section {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    .section-1 {
-      font-size: 4em;
-      background: #d2691e;
-      color: white;
-    }
-    .section-2 {
-      transform-style: preserve-3d;
-    }
-    #cake-pop-model, #donut-model, #cupcake-model {
-      transform: translateZ(-1px) scale(2);
-    }
-    .section-3 {
-      font-size: 2em;
-      background: #fff3e0;
-      color: #4a2e2a;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .btn {
-      background-color: #4a2e2a;
-      color: white;
-      padding: 15px 25px;
-      margin: 10px;
-      border: none;
-      cursor: pointer;
-      font-size: 1em;
-      border-radius: 5px;
-    }
-    .btn:hover {
-      background-color: #6f4e37;
-    }
-  </style>
-</head>
-<body>
-  <div id="container">
-    <div class="section section-1">
-      <div>Hakaccio Cake 3D Experience</div>
-    </div>
-    <div class="section section-2">
-      <a-scene embedded>
-        <a-sky color="#FFFAF0"></a-sky>
-        <a-light type="directional" position="-1 2 1" intensity="1"></a-light>
-        <a-camera position="0 0 3"></a-camera>
-        
-        <!-- Cake Pop Model -->
-        <a-entity
-          id="cake-pop-model"
-          gltf-model="Cake_Pop.gltf"
-          position="0 -1 -5"
-          scale="1.5 1.5 1.5"
-          rotation="0 45 0">
-        </a-entity>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Disco Ball with Large Directional Lights</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      #scene {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene>
+      <a-entity>
+        <a-sphere
+          id="disco-ball"
+          radius="3"
+          position="0 0 0"
+          color="#FFF"
+          metalness="1"
+          roughness="0.05"
+          rotation="0 0 0"
+        >
+        </a-sphere>
+      </a-entity>
 
-        <!-- Donut Model -->
-        <a-entity
-          id="donut-model"
-          gltf-model="Donut.gltf"
-          position="-2 -1 -6"
-          scale="1.5 1.5 1.5"
-          rotation="0 45 0">
-        </a-entity>
-        
-        <!-- Cupcake Model -->
-        <a-entity
-          id="cupcake-model"
-          gltf-model="Cupcake.gltf"
-          position="2 -1 -6"
-          scale="1.5 1.5 1.5"
-          rotation="0 45 0">
-        </a-entity>
-      </a-scene>
-    </div>
-    <div class="section section-3">
-      <div>Make a 3D Website • Get a free Cake Pop</div>
-      <button class="btn">Get Started</button>
-      <button class="btn">Learn More</button>
-    </div>
-  </div>
+      <script>
+        const lightCount = 20;
+        const colors = [
+          "#F00",
+          "#0F0",
+          "#00F",
+          "#FF0",
+          "#0FF",
+          "#F0F",
+          "#FFF",
+          "#F90",
+          "#F7A",
+          "#F6D",
+          "#D6F",
+          "#A6F",
+          "#D5F",
+          "#D6A",
+          "#6F6",
+          "#F7F",
+          "#F77",
+          "#6FF",
+          "#F99",
+          "#9F0",
+          "#FF6",
+          "#6F9",
+          "#0F9",
+          "#9FF",
+          "#0FF",
+          "#F0A",
+          "#F0F",
+          "#F80",
+          "#80F",
+          "#0F0",
+          "#F00",
+          "#FF0",
+        ];
+        const scene = document.querySelector("a-scene");
 
-  <script>
-    document.addEventListener('scroll', () => {
-      const cakePopModel = document.getElementById('cake-pop-model');
-      const donutModel = document.getElementById('donut-model');
-      const cupcakeModel = document.getElementById('cupcake-model');
-      
-      const scrollPosition = window.scrollY;
-      const modelPosition = Math.min(0, -5 + scrollPosition / 100);
-      
-      cakePopModel.setAttribute('position', `0 -1 ${modelPosition}`);
-      donutModel.setAttribute('position', `-2 -1 ${modelPosition - 1}`);
-      cupcakeModel.setAttribute('position', `2 -1 ${modelPosition - 1}`);
-    });
-  </script>
-</body>
+        for (let i = 0; i < lightCount; i++) {
+          const light = document.createElement("a-light");
+          light.setAttribute("type", "directional");
+          light.setAttribute("intensity", Math.random() * 5 + 1); // Increased intensity
+          light.setAttribute(
+            "color",
+            colors[Math.floor(Math.random() * colors.length)]
+          );
+          light.setAttribute(
+            "position",
+            `${Math.random() * 45 - 20} ${Math.random() * 39 - 20} ${
+              Math.random() * 38 - 20
+            }`
+          ); // Increased range
+          light.setAttribute(
+            "rotation",
+            `${Math.random() * 180 - 90} ${Math.random() * 360} ${
+              Math.random() * 180 - 90
+            }`
+          );
+
+          const target = document.createElement("a-entity");
+          target.setAttribute("position", "0 0 -1");
+          light.appendChild(target);
+
+          scene.appendChild(light);
+        }
+      </script>
+
+      <a-camera position="0 0 6"></a-camera>
+
+      <a-sky src="img.jpg"></a-sky>
+    </a-scene>
+
+    <script>
+      function animateDirectionalLights() {
+        const lights = document.querySelectorAll('a-light[type="directional"]');
+
+        function animate() {
+          lights.forEach((light) => {
+            light.setAttribute("intensity", Math.random() * 3 + 5);
+            light.setAttribute(
+              "color",
+              `#${Math.floor(Math.random() * 16777215).toString(16)}`
+            );
+            light.setAttribute(
+              "position",
+              `${Math.random() * 45 - 20} ${Math.random() * 39 - 20} ${
+                Math.random() * 38 - 20
+              }`
+            ); // Increased range
+
+            light.setAttribute(
+              "rotation",
+              `${Math.random() * 174 - 90} ${Math.random() * 360} ${
+                Math.random() * 183 - 90
+              }`
+            );
+          });
+          setTimeout(animate, 100);
+        }
+
+        animate();
+      }
+
+      animateDirectionalLights();
+    </script>
+  </body>
 </html>
