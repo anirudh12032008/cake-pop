@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hakaccio Cake 3D Experience</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background-color: #fff3e0;
+      color: #4a2e2a;
+    }
+    #container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      perspective: 1px;
+      scroll-behavior: smooth;
+    }
+    .section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .section-1 {
+      font-size: 4em;
+      background: #d2691e;
+      color: white;
+    }
+    .section-2 {
+      transform-style: preserve-3d;
+    }
+    #cake-pop-model, #donut-model, #cupcake-model {
+      transform: translateZ(-1px) scale(2);
+    }
+    .section-3 {
+      font-size: 2em;
+      background: #fff3e0;
+      color: #4a2e2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn {
+      background-color: #4a2e2a;
+      color: white;
+      padding: 15px 25px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background-color: #6f4e37;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div class="section section-1">
+      <div>Hakaccio Cake 3D Experience</div>
+    </div>
+    <div class="section section-2">
+      <a-scene embedded>
+        <a-sky color="#FFFAF0"></a-sky>
+        <a-light type="directional" position="-1 2 1" intensity="1"></a-light>
+        <a-camera position="0 0 3"></a-camera>
+        
+        <!-- Cake Pop Model -->
+        <a-entity
+          id="cake-pop-model"
+          gltf-model="Cake_Pop.gltf"
+          position="0 -1 -5"
+          scale="1.5 1.5 1.5"
+          rotation="0 45 0">
+        </a-entity>
+
+        <!-- Donut Model -->
+        <a-entity
+          id="donut-model"
+          gltf-model="Donut.gltf"
+          position="-2 -1 -6"
+          scale="1.5 1.5 1.5"
+          rotation="0 45 0">
+        </a-entity>
+        
+        <!-- Cupcake Model -->
+        <a-entity
+          id="cupcake-model"
+          gltf-model="Cupcake.gltf"
+          position="2 -1 -6"
+          scale="1.5 1.5 1.5"
+          rotation="0 45 0">
+        </a-entity>
+      </a-scene>
+    </div>
+    <div class="section section-3">
+      <div>Make a 3D Website • Get a free Cake Pop</div>
+      <button class="btn">Get Started</button>
+      <button class="btn">Learn More</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('scroll', () => {
+      const cakePopModel = document.getElementById('cake-pop-model');
+      const donutModel = document.getElementById('donut-model');
+      const cupcakeModel = document.getElementById('cupcake-model');
+      
+      const scrollPosition = window.scrollY;
+      const modelPosition = Math.min(0, -5 + scrollPosition / 100);
+      
+      cakePopModel.setAttribute('position', `0 -1 ${modelPosition}`);
+      donutModel.setAttribute('position', `-2 -1 ${modelPosition - 1}`);
+      cupcakeModel.setAttribute('position', `2 -1 ${modelPosition - 1}`);
+    });
+  </script>
+</body>
+</html>
